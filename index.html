@@ -939,7 +939,7 @@ async function exportarPDF() {
     loading.style.display = 'none';
   }
 }
-const hoy = new Date();
+  const hoy = new Date();
   const dia = String(hoy.getDate()).padStart(2, '0');
   const mes = String(hoy.getMonth() + 1).padStart(2, '0');
   const año = hoy.getFullYear();
@@ -947,6 +947,20 @@ const hoy = new Date();
   document.querySelectorAll('.today-date').forEach(el => {
     el.textContent = `${dia}/${mes}/${año}`;
   });
+
+  const url=window.location.href;
+  const params=new URL(url).searchParams;
+
+  document.querySelectorAll('.parameter-name').forEach(el => {
+    el.textContent = params.get("nombre");
+  });
+  document.querySelectorAll('.parameter-address').forEach(el => {
+    el.textContent = params.get("calle");
+  });
+  document.querySelectorAll('.parameter-state').forEach(el => {
+    el.textContent = params.get("ciudad");
+  });
+
 </script>
 </body>
 </html>

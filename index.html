@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cotización Aclara</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --blue:#1565A8;
+  --blue2:#1B73BE;
+  --teal:#0EB5C8;
+  --dark:#1A2B3C;
+  --gray:#555;
+  --lgray:#f5f7fa;
+  --border:#dde3ea;
+  --text:#1a1a1a;
+}
+
+body{
+  font-family:'Open Sans',sans-serif;
+  background:#c5d5e2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:28px 16px 60px;
+  gap:12px;
+}
+
+/* ── TOOLBAR ── */
+.desc-propuesta{
+  width: 50%;
+}
+.diag-propuesta{
+  width: 50%;
+}
+.term-propuesta{
+  width: 40%;
+}
+.toolbar{
+  width:794px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#fff;
+  border-radius:8px;
+  padding:11px 18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
+  font-size:12.5px;
+  color:#555;
+}
+.toolbar .btns{display:flex;gap:10px;align-items:center}
+.tbtn{
+  font-family:'Open Sans',sans-serif;
+  font-size:12.5px;font-weight:700;
+  padding:8px 20px;border:none;border-radius:6px;
+  cursor:pointer;transition:opacity .15s;
+}
+.tbtn:hover{opacity:.84}
+.tbtn-pdf{background:var(--blue2);color:#fff}
+.tbtn-reset{background:var(--lgray);color:var(--dark);border:1px solid var(--border)}
+#loading{font-size:12px;color:var(--blue2);font-weight:700;display:none}
+
+/* ── PAGE ── */
+.pagina{
+  width:794px;
+  min-height:1123px;
+  background:#fff;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 3px 20px rgba(0,0,0,.14);
+}
+
+/* ══ SHARED HEADER ══ */
+.pg-header{
+  position:relative;
+  height:177px;
+  overflow:hidden;
+  background-image: url('https://i.imgur.com/s3Y5mhU.png');
+  background-position: right;
+  background-size: cover;
+}
+
+.pg-header-inner{
+  position:relative;z-index:2;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:16px 28px 0;
+}
+
+/* Logo area */
+.logo-area{display:flex;align-items:center;gap:9px}
+.logo-circle{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,#1565A8,#0EB5C8);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.logo-circle svg{width:26px;height:26px}
+.logo-txt{line-height:1}
+.logo-name{
+  font-family:'Nunito',sans-serif;
+  font-size:28px;font-weight:900;
+  color:var(--blue2);
+  letter-spacing:-.5px;
+}
+.logo-name sup{font-size:10px;font-weight:700;color:var(--teal);vertical-align:super}
+.logo-tag{font-size:9px;color:#888;font-style:italic;margin-top:2px}
+
+.empresa-info{
+  text-align:right;
+  font-size:10px;
+  color:#fff;
+  line-height:1.72;
+  padding-top:2px;
+}
+.empresa-info b{display:block;font-size:10.5px;font-weight:700;margin-bottom:1px}
+
+/* ── META ROW (client + quote) ── */
+.meta-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:14px 28px 10px;
+}
+.client-bl{font-size:11px;color:var(--text);line-height:1.8;font-weight: 600;}
+.client-bl .cl{font-weight:700;color:var(--blue2)}
+.quote-bl{text-align:right;font-size:10.5px;color:var(--gray);line-height:1.8}
+.quote-bl .qn{color:var(--blue2);font-weight:600}
+
+/* ── SECTION TITLE ── */
+.sec-title{
+  background:linear-gradient(90deg,#0D4F8C 0%,#1565A8 35%,#1898C0 70%,#0EB5C8 100%);
+  color:#fff;
+  font-family:'Nunito',sans-serif;
+  font-size:16px;font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:9px 28px;
+  /* rounded left corner like original */
+  clip-path:polygon(0 0,100% 0,100% 100%,12px 100%,0 60%);
+  margin:6px 0;
+}
+/* alternate: no clip, plain pill-left style */
+.sec-title-plain{
+  background:linear-gradient(90deg,#0D4F8C,#0EB5C8);
+  color:#fff;
+  font-family:'Nunito',sans-serif;
+  font-size:14px;font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:8px 28px 8px 22px;
+  border-radius:0 4px 4px 0;
+  display:inline-block;
+  margin:10px 0 10px 28px;
+}
+
+/* ── FOOTER ── */
+.pg-footer{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:114px;
+  background:var(--dark);
+  overflow:hidden;
+  background-image: url('https://i.imgur.com/xBwthRO.png');
+  background-position: right;
+  background-size: cover;
+}
+.pg-footer-inner{
+  position:relative;z-index:2;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:10px 28px;
+  height:100%;
+}
+.footer-dept{text-align:right;margin-top: 16px;}
+.footer-dept h4{
+  font-family:'Nunito',sans-serif;
+  font-size:11px;font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#00B5E2;
+  margin-bottom:4px;
+}
+.footer-dept p{font-size:11px;color:white;line-height:1.72}
+
+/* ════════════════════════════════
+   PAGE 1 – specific
+   ════════════════════════════════ */
+.p1-body{
+  padding:0 28px;
+  display:grid;
+  grid-template-columns:1fr 210px;
+  gap:20px;
+  align-items:start;
+  margin-top:4px;
+}
+.p1-left{font-size:11px;color:var(--text);line-height:1.75}
+.p1-left p{margin-bottom:8px}
+.p1-left ul{list-style:none;padding:0}
+.p1-left ul li{
+  padding-left:14px;position:relative;
+  margin-bottom:5px;text-align:justify;
+}
+.p1-left ul li::before{content:"•";position:absolute;left:2px;color:var(--text)}
+
+/* mini table */
+.mini-table{
+  width:100%;border-collapse:collapse;
+  font-size:10.5px;margin-top:14px;
+  border:1px solid #bbb;
+}
+.mini-table th{
+  background:#fff;border:1px solid #bbb;
+  padding:5px 8px;font-weight:700;text-align:left;color:var(--text);
+}
+.mini-table td{
+  border:1px solid #bbb;padding:5px 8px;color:var(--text);
+}
+
+/* diagrams */
+.diagrams-area{
+  padding:10px 28px 84px;
+  display:flex;flex-direction:column;gap:20px;
+}
+.diag-row{display:flex;align-items:center;gap:6px}
+.diag-lbl{
+  font-size:9.5px;color:#333;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  white-space:nowrap;
+  margin-right:2px;
+}
+.diag-svg-wrap{flex:1}
+.diag-dim{
+  display:flex;align-items:center;margin-top:2px;
+}
+.diag-dim-line{flex:1;height:1px;background:#444}
+.diag-dim-txt{font-size:8.5px;color:#333;padding:0 6px;white-space:nowrap}
+
+/* ════════════════════════════════
+   PAGE 2 – partidas
+   ════════════════════════════════ */
+.p2-body{padding:0 28px 84px}
+
+.partida{
+  display:grid;
+  grid-template-columns:140px 1fr auto;
+  gap:0;
+  border-bottom:1px solid var(--border);
+  padding:16px 0;
+  align-items:start;
+}
+.partida:last-child{border-bottom:none}
+.partida-img{
+  padding-right:14px;
+}
+.partida-desc{font-size:10.5px;color:var(--text);line-height:1.72;padding-right:10px}
+.partida-desc h3{
+  font-family:'Nunito',sans-serif;
+  font-size:12px;font-weight:900;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.partida-price{
+  font-family:'Nunito',sans-serif;
+  font-size:13px;font-weight:800;
+  color:var(--text);
+  white-space:nowrap;
+  text-align:right;
+  padding-top:2px;
+}
+.params-block{
+  padding:0 28px 84px;
+  font-size:10.5px;color:var(--text);line-height:1.75;
+}
+.params-block h3{
+  font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;
+}
+.params-block p{margin-bottom:6px}
+.params-block b{font-weight:700}
+
+/* ════════════════════════════════
+   PAGE 3 – diagram instalacion
+   ════════════════════════════════ */
+.p3-code{
+  font-family:'Nunito',sans-serif;
+  font-size:42px;font-weight:900;
+  color:var(--text);
+  text-align:center;
+  padding:14px 0 6px;
+  letter-spacing:.06em;
+}
+.p3-diagram-img{
+  margin:0 28px;
+  height:280px;
+  background:linear-gradient(135deg,#e8eff5 0%,#d0dce8 100%);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.p3-diagram-img svg{width:100%;height:auto}
+
+.p3-chars{
+  padding:16px 28px 84px;
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;
+  font-size:10.5px;color:var(--text);
+}
+.p3-chars-col h3{
+  font-family:'Nunito',sans-serif;font-size:11px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.04em;
+  margin-bottom:6px;color:var(--text);
+}
+.p3-chars-col ul{list-style:none;padding:0}
+.p3-chars-col ul li{
+  padding-left:14px;position:relative;
+  margin-bottom:4px;line-height:1.7;
+}
+.p3-chars-col ul li::before{content:"•";position:absolute;left:2px}
+
+/* ════════════════════════════════
+   PAGE 4 – terms
+   ════════════════════════════════ */
+.p4-body{padding:6px 28px 84px}
+.p4-body h2{
+  font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--dark);margin-bottom:10px;
+  border-bottom:2px solid var(--blue2);
+  padding-bottom:4px;
+}
+.terms-list{list-style:none;padding:0;font-size:9.8px;color:var(--text);line-height:1.72}
+.terms-list li{
+  display:grid;grid-template-columns:16px 1fr;
+  gap:4px;margin-bottom:4px;
+}
+.terms-list li span.ltr{font-weight:700;color:var(--blue2)}
+
+.bank-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  margin-top:10px;
+}
+.bank-item{
+  background:var(--lgray);border:1px solid var(--border);
+  border-radius:4px;padding:7px 10px;
+  font-size:9.5px;color:var(--text);line-height:1.6;
+}
+.bank-item b{display:block;font-weight:700;font-size:10px;margin-bottom:2px;color:var(--blue2)}
+
+.terms-note{
+  margin-top:10px;font-size:9.5px;color:#777;
+  font-style:italic;text-align:center;
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOOLBAR ── -->
+<div class="toolbar">
+  <span>📄 Cotización Aclara · 4 páginas</span>
+  <div class="btns">
+    <span id="loading">⏳ Generando PDF…</span>
+    <button class="tbtn tbtn-pdf" onclick="exportarPDF()">⬇ Exportar PDF</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PÁGINA 1 – Descripción de la propuesta
+     ════════════════════════════════════════ -->
+<div class="pagina" id="pag1">
+
+  <!-- HEADER -->
+  <div class="pg-header">
+    <div class="pg-header-inner">
+      <div class="logo-area">
+      </div>
+      <div class="empresa-info">
+        ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
+        RFC: ATA-131127-8U9<br>
+        Tabachín 202,<br>
+        Bellavista, Cuernavaca,<br>
+        Morelos C.P. 62140<br>
+        Tels: 777 364 5092 – 800 225 2728
+      </div>
+    </div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-row">
+    <div class="client-bl">
+      <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
+      <span class="cl">Lugar de instalación:</span><br>
+      <span class="parameter-address"></span><br>
+      <span class="parameter-state"></span>
+    </div>
+    <div class="quote-bl">
+      <span class="qn">Cotización: <span class="parameter-id">C-1740608454</span></span><br>
+      Fecha de emisión: <span class="today-date"></span>
+    </div>
+  </div>
+
+  <!-- SECTION TITLE -->
+  <img src="https://i.imgur.com/j930Jn1.jpeg" class="desc-propuesta"/>
+
+  <div class="p1-body">
+    <div class="p1-left">
+      <p>El presente documento integra las propuestas económicas para:</p>
+      <ul>
+        <li>Pruebas piloto y de laboratorio para evaluación de eficiencia de dos sistemas de tratamiento para cumplimiento de la NOM-001-SEMARNAT-2021.</li>
+        <li>Planta de tratamiento de aguas residuales con capacidad para tratar 5 lps (propuesta basada en diseño preliminar)</li>
+      </ul>
+      <table class="mini-table">
+        <thead><tr>
+          <th>Módelo</th><th>Largo</th><th>Ancho</th><th>Altura</th><th>Capacidad</th>
+        </tr></thead>
+        <tbody><tr>
+          <td>Carga Orgánica DBO5</td><td>12.19 m</td><td>2.43 m</td><td>2.89 m</td><td>5.0 lps</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <!-- Container 3D SVG -->
+    <div>
+      <svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(2px 5px 10px rgba(0,0,0,.22))">
+        <!-- Main front face -->
+        <rect x="8" y="50" width="252" height="148" rx="3" fill="#25AACC"/>
+        <!-- Top face -->
+        <polygon points="8,50 62,18 314,18 260,50" fill="#3CCCE0"/>
+        <!-- Right face -->
+        <polygon points="260,50 314,18 314,166 260,198" fill="#1488A8"/>
+        <!-- Horizontal midline -->
+        <line x1="8" y1="124" x2="260" y2="124" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+        <!-- Vertical lines (corrugation) -->
+        <line x1="50"  y1="52" x2="50"  y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+        <line x1="95"  y1="52" x2="95"  y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+        <line x1="115" y1="52" x2="115" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+        <line x1="175" y1="52" x2="175" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+        <line x1="215" y1="52" x2="215" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+        <line x1="235" y1="52" x2="235" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
+        <!-- Corner posts -->
+        <rect x="8"   y="48" width="7" height="150" rx="1" fill="rgba(0,0,0,.22)"/>
+        <rect x="245" y="48" width="7" height="150" rx="1" fill="rgba(0,0,0,.22)"/>
+        <!-- Door divider -->
+        <line x1="136" y1="50" x2="136" y2="198" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
+        <!-- Door handles -->
+        <rect x="130" y="118" width="5" height="12" rx="2" fill="rgba(0,0,0,.35)"/>
+        <rect x="137" y="118" width="5" height="12" rx="2" fill="rgba(0,0,0,.35)"/>
+        <!-- Aclara wave logo on side -->
+        <circle cx="48" cy="96" r="16" fill="rgba(255,255,255,.18)"/>
+        <path d="M38 98 Q42 92 48 95 Q54 98 58 92" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <!-- Aclara text -->
+        <text x="72" y="104" font-family="Arial" font-size="20" font-weight="900" fill="rgba(255,255,255,.9)" letter-spacing=".5">Aclara</text>
+        <!-- Vent top -->
+        <rect x="190" y="22" width="28" height="9" rx="2" fill="rgba(0,80,110,.45)"/>
+        <!-- Corner fittings -->
+        <rect x="8"   y="193" width="18" height="10" rx="1" fill="#0E7A96"/>
+        <rect x="242" y="193" width="18" height="10" rx="1" fill="#0E7A96"/>
+        <rect x="62"  y="13"  width="14" height="8"  rx="1" fill="#0E7A96"/>
+        <rect x="300" y="13"  width="14" height="8"  rx="1" fill="#0E7A96"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- DIAGRAMS -->
+  <div class="diagrams-area">
+
+    <!-- Plant view -->
+    <div class="diag-row">
+      <div class="diag-lbl">2.43</div>
+      <div class="diag-svg-wrap">
+        <svg viewBox="0 0 700 92" xmlns="http://www.w3.org/2000/svg" style="width:100%;border:1px solid #aaa;display:block">
+          <rect width="700" height="92" fill="#f8f9fb"/>
+          <rect x="1" y="1" width="698" height="90" fill="none" stroke="#555" stroke-width="1.3"/>
+          <!-- Reactor Anóxico top -->
+          <rect x="1" y="1" width="112" height="46" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="57" y="20" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
+          <text x="57" y="30" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">ANÓXICO</text>
+          <!-- Reactor Anaeróbio bottom -->
+          <rect x="1" y="47" width="112" height="44" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="57" y="68" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
+          <text x="57" y="78" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">ANAERÓBIO</text>
+          <!-- Reactor Oxidación Total -->
+          <rect x="113" y="1" width="188" height="90" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="207" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR DE</text>
+          <text x="207" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">OXIDACIÓN</text>
+          <text x="207" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TOTAL</text>
+          <!-- Reactor Post-Anóxico -->
+          <rect x="301" y="1" width="96" height="90" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="349" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
+          <text x="349" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">POST-ANÓXICO</text>
+          <!-- Sedimentador Secundario -->
+          <rect x="397" y="1" width="112" height="90" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="453" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SEDIMENTADOR</text>
+          <text x="453" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SECUNDARIO</text>
+          <!-- Tanque Contacto Cloro -->
+          <rect x="509" y="1" width="100" height="90" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="559" y="37" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TANQUE DE</text>
+          <text x="559" y="48" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CONTACTO</text>
+          <text x="559" y="59" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">DE CLORO</text>
+          <!-- Caseta Equipos -->
+          <rect x="609" y="1" width="90" height="90" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="654" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CASETA DE</text>
+          <text x="654" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">EQUIPOS</text>
+        </svg>
+        <div class="diag-dim">
+          <div class="diag-dim-line"></div>
+          <span class="diag-dim-txt">— 12.19 —</span>
+          <div class="diag-dim-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-section view -->
+    <div class="diag-row">
+      <div class="diag-lbl">2.89</div>
+      <div class="diag-svg-wrap">
+        <svg viewBox="0 0 700 112" xmlns="http://www.w3.org/2000/svg" style="width:100%;border:1px solid #aaa;display:block">
+          <rect width="700" height="112" fill="#f8f9fb"/>
+          <rect x="1" y="1" width="698" height="110" fill="none" stroke="#555" stroke-width="1.3"/>
+          <!-- water level line teal -->
+          <line x1="113" y1="28" x2="509" y2="28" stroke="#0EB5C8" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <!-- Reactor Anóxico -->
+          <rect x="1" y="1" width="112" height="110" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="57" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
+          <text x="57" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">ANÓXICO</text>
+          <!-- Reactor Oxidación Total (with water fill) -->
+          <rect x="113" y="1" width="188" height="110" fill="none" stroke="#666" stroke-width=".9"/>
+          <rect x="114" y="29" width="186" height="81" fill="rgba(14,181,200,.1)"/>
+          <text x="207" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR DE</text>
+          <text x="207" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">OXIDACIÓN</text>
+          <text x="207" y="75" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TOTAL</text>
+          <!-- Reactor Post-Anóxico -->
+          <rect x="301" y="1" width="96" height="110" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="349" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
+          <text x="349" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">POST-ANÓXICO</text>
+          <!-- Sedimentador (diagonal) -->
+          <rect x="397" y="1" width="112" height="110" fill="none" stroke="#666" stroke-width=".9"/>
+          <line x1="509" y1="44" x2="397" y2="110" stroke="#666" stroke-width="1"/>
+          <text x="453" y="28" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SEDIMENTADOR</text>
+          <text x="453" y="38" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SECUNDARIO</text>
+          <!-- Tanque Cloro -->
+          <rect x="509" y="1" width="100" height="110" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="559" y="46" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TANQUE DE</text>
+          <text x="559" y="57" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CONTACTO</text>
+          <text x="559" y="68" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">DE CLORO</text>
+          <!-- Caseta -->
+          <rect x="609" y="1" width="90" height="110" fill="none" stroke="#666" stroke-width=".9"/>
+          <text x="654" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CASETA DE</text>
+          <text x="654" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">EQUIPOS</text>
+        </svg>
+        <div class="diag-dim">
+          <div class="diag-dim-line"></div>
+          <span class="diag-dim-txt">— 12.19 —</span>
+          <div class="diag-dim-line"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /diagrams -->
+
+  <!-- FOOTER -->
+  <div class="pg-footer">
+    <div class="pg-footer-inner">
+      <div class="footer-dept">
+        <h4>Departamento Comercial</h4>
+        <p>Ing. Manuel Guerrero Orozco<br>
+        E-mail: manuel.guerrero@aclara.mx<br>
+        Tel: 4432094250</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pag1 -->
+
+
+<!-- ════════════════════════════════════════
+     PÁGINA 2 – Partidas / Precios
+     ════════════════════════════════════════ -->
+<div class="pagina" id="pag2">
+
+  <div class="pg-header">
+    <div class="pg-header-inner">
+      <div class="logo-area">
+      </div>
+      <div class="empresa-info">
+        ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
+        RFC: ATA-131127-8U9<br>Tabachín 202,<br>Bellavista, Cuernavaca,<br>Morelos C.P. 62140<br>Tels: 777 364 5092 – 800 225 2728
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <div class="client-bl">
+      <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
+      <span class="cl">Lugar de instalación:</span><br>
+      <span class="parameter-address"></span><br>
+      <span class="parameter-state"></span>
+    </div>
+    <div class="quote-bl">
+      <span class="qn">Cotización: <span class="parameter-id">C-1740608454</span></span><br>
+      Fecha de emisión: <span class="today-date"></span>
+    </div>
+  </div>
+
+  <img src="https://i.imgur.com/j930Jn1.jpeg" class="desc-propuesta"/>
+
+  <div class="p2-body">
+
+    <!-- Partida 1 -->
+    <div class="partida">
+      <div class="partida-img">
+        <!-- small container thumbnail -->
+        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="20" width="90" height="56" rx="2" fill="#25AACC"/>
+          <polygon points="4,20 26,6 116,6 94,20" fill="#3CCCE0"/>
+          <polygon points="94,20 116,6 116,60 94,74" fill="#1488A8"/>
+          <line x1="18" y1="22" x2="18" y2="74" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+          <line x1="38" y1="22" x2="38" y2="74" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+          <line x1="70" y1="22" x2="70" y2="74" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+          <text x="28" y="52" font-family="Arial" font-size="8" font-weight="900" fill="rgba(255,255,255,.85)">Aclara</text>
+        </svg>
+      </div>
+      <div class="partida-desc">
+        <h3>PTAR Aquapack Aclara 001-SC Cap. 0.40 LPS</h3>
+        Capacidad: 34.56 m³/Día. Planta de tratamiento de agua residual tipo portátil. Cumplimiento de la NOM-001-SEMARNAT-2021 Para Descarga a suelo tipo cárstico.<br>
+        * Se consideran los parámetros máximos de descargas típicas (DBO5 = 1970 ppm, SST = 350 mg/l, G y A = 70 mg/l); NT: 570 mg/l, FT: 88 mg/l para descargas atípicas, se requieren ajustes en el diseño y precio.<br>
+        Dimensiones Ancho: 2.43m. Alto: 2.89m. Largo: 12.19m. Peso: 6755.5 Kg.<br>
+        Esta PTAR será suministrada para trabajar con un voltaje de 220/V trifásico, 3 fases, 4 hilos. Material de acero al carbón con acabado en poliuretano. Diseño compacto (Sistema Secuencial-Tecnología LAOTSS), con conexiones de entrada y salida en contenedor lista para instalarse y operar, Incluye: reactor anóxico, anaeróbio y post-anóxico al interior.<br>
+        Sistema automatizado y TODO INCLUIDO: Reactor, equipamiento, caseta de operación, rejilla de desbaste de sólidos y sistema reductor de lodos de desecho.
+      </div>
+      <div class="partida-price">$ 1,706,506.40</div>
+    </div>
+
+    <!-- Partida 2 -->
+    <div class="partida" style="grid-template-columns:1fr auto">
+      <div class="partida-desc">
+        <h3>Bomba Dosificadora de Metanol</h3>
+        Suministro e instalacion de bomba dosificadora de impulsos magnéticos marca lmi o similar, modelo B131, con cabezal y conexiones de 0.375" o.d. en pvc, bolas en cerámica, diafragma en fluorofilmtm y cartucho de la válvula en pvc/polyprel. flujo de 0.24 LPM @ 50 psi @ 100 cpm (carreras por minuto). Incluye tanque termoplastico con capacidad para 100 l. Incluye: material, mano de obra, equipo, herramienta y lo necesario para su correcta instalación.
+      </div>
+      <div class="partida-price">$ 32,400.00</div>
+    </div>
+
+    <!-- Partida 3 -->
+    <div class="partida" style="grid-template-columns:1fr auto">
+      <div class="partida-desc">
+        <h3>Sensor de ORP</h3>
+        Suministro de instalacion de 3 sensores de ORP modelo SUP-ORP60, instalados en reactor anóxico, anaeróbio y post-anóxico, Incluye transmisor y conexión con medición física en campo, material, mano de obra, equipo, herramienta y lo necesario para su correcta instalacion.
+      </div>
+      <div class="partida-price">$ 29,000.00</div>
+    </div>
+
+  </div><!-- /p2-body -->
+
+  <div class="params-block">
+    <h3>Parámetros para cumplir con la NOM-001 para descarga a SUELO TIPO CÁRSTICO:</h3>
+    <p>GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L</p>
+    <p><b>Tiempo de entrega: 12 Semanas.</b></p>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-inner">
+      <div class="footer-dept">
+        <h4>Departamento Comercial</h4>
+        <p>Ing. Manuel Guerrero Orozco<br>E-mail: manuel.guerrero@aclara.mx<br>Tel: 4432094250</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pag2 -->
+
+
+<!-- ════════════════════════════════════════
+     PÁGINA 3 – Diagrama de instalación
+     ════════════════════════════════════════ -->
+<div class="pagina" id="pag3">
+
+  <div class="pg-header">
+    <div class="pg-header-inner">
+      <div class="logo-area">
+      </div>
+      <div class="empresa-info">
+        ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
+        RFC: ATA-131127-8U9<br>Tabachín 202,<br>Bellavista, Cuernavaca,<br>Morelos C.P. 62140<br>Tels: 777 364 5092 – 800 225 2728
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <div class="client-bl">
+      <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
+      <span class="cl">Lugar de instalación:</span><br>
+      <span class="parameter-address"></span><br>
+      <span class="parameter-state"></span>
+    </div>
+    <div class="quote-bl">
+      <span class="qn">Cotización: <span class="parameter-id">C-1740608454</span></span><br>
+      Fecha de emisión: <span class="today-date"></span>
+    </div>
+  </div>
+
+  <img src="https://i.imgur.com/CkU1vwr.jpeg" class="diag-propuesta"/>
+
+  <div class="p3-code">PK 003CD</div>
+
+  <!-- Installation diagram SVG -->
+  <div class="p3-diagram-img">
+    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+      <!-- Ground platform -->
+      <polygon points="30,220 670,220 700,260 0,260" fill="#8B7355"/>
+      <polygon points="30,220 670,220 700,260 0,260" fill="url(#groundGrad)"/>
+      <defs>
+        <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#9B8366"/>
+          <stop offset="100%" stop-color="#7A6448"/>
+        </linearGradient>
+        <linearGradient id="tankGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#2a2a2a"/>
+          <stop offset="100%" stop-color="#111"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Main structure (concrete PTAR) -->
+      <rect x="80" y="110" width="400" height="112" fill="#C8C8C8"/>
+      <rect x="80" y="108" width="400" height="6"   fill="#B0B0B0"/>
+      <!-- Internal walls -->
+      <rect x="130" y="110" width="3" height="112" fill="#A8A8A8"/>
+      <rect x="200" y="110" width="3" height="112" fill="#A8A8A8"/>
+      <rect x="330" y="110" width="3" height="112" fill="#A8A8A8"/>
+      <rect x="400" y="110" width="3" height="112" fill="#A8A8A8"/>
+      <!-- Dark zones inside -->
+      <rect x="133" y="112" width="64"  height="108" fill="#9A9A9A"/>
+      <rect x="203" y="112" width="124" height="108" fill="#868686"/>
+      <!-- Sedimentador diagonal -->
+      <polygon points="333,112 400,112 400,222 333,222" fill="#9A9A9A"/>
+      <line x1="400" y1="150" x2="333" y2="222" stroke="#888" stroke-width="2"/>
+
+      <!-- Black tank (retiro de lodo) -->
+      <ellipse cx="530" cy="195" rx="36" ry="10" fill="#1a1a1a"/>
+      <rect x="494" y="130" width="72" height="65" fill="url(#tankGrad)" rx="2"/>
+      <ellipse cx="530" cy="130" rx="36" ry="10" fill="#333"/>
+
+      <!-- Small filter box -->
+      <rect x="590" y="185" width="50" height="36" fill="#888" rx="2"/>
+      <rect x="590" y="183" width="50" height="6"  fill="#777" rx="1"/>
+
+      <!-- Flow pipes (blue) -->
+      <path d="M80 165 L40 165 L40 250" stroke="#1B73BE" stroke-width="2.5" fill="none"/>
+      <path d="M480 145 L530 145 L530 130" stroke="#0EB5C8" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+      <path d="M566 195 L590 195" stroke="#0EB5C8" stroke-width="2" fill="none"/>
+      <path d="M615 221 L615 250" stroke="#0EB5C8" stroke-width="2.5" fill="none"/>
+
+      <!-- Labels -->
+      <text x="30"  y="105" font-family="Arial" font-size="7.5" fill="#333" font-weight="700">INFLUENTE</text>
+      <text x="36"  y="240" font-family="Arial" font-size="7"   fill="#555">↓</text>
+
+      <text x="85"  y="104" font-family="Arial" font-size="7"   fill="#333" font-weight="700">PRETRATAMIENTO</text>
+      <text x="68"  y="240" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">DESARENADOR</text>
+      <text x="110" y="248" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">TRAMPA</text>
+      <text x="110" y="256" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">DE GRASAS</text>
+      <text x="152" y="248" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">CÁRCAMO</text>
+      <text x="152" y="256" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">DE BOMBEO</text>
+
+      <text x="205" y="100" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">CRIBADO</text>
+      <line x1="205" y1="102" x2="205" y2="110" stroke="#555" stroke-width=".8"/>
+
+      <text x="270" y="92"  font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">REACTOR DE</text>
+      <text x="270" y="100" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">OXIDACIÓN TOTAL</text>
+      <line x1="270" y1="102" x2="270" y2="110" stroke="#555" stroke-width=".8"/>
+
+      <text x="370" y="100" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">SEDIMENTADOR</text>
+      <line x1="370" y1="102" x2="370" y2="110" stroke="#555" stroke-width=".8"/>
+
+      <text x="450" y="135" font-family="Arial" font-size="7" fill="#333" font-weight="700">DEMASÍAS</text>
+      <text x="450" y="150" font-family="Arial" font-size="7" fill="#333" font-weight="700">CLORACIÓN</text>
+
+      <text x="532" y="122" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">RETIRO DE LODO</text>
+
+      <text x="610" y="182" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">FILTRO DE ARENA</text>
+
+      <text x="615" y="262" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">AGUA TRATADA</text>
+      <text x="615" y="270" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">DISPOSICIÓN FINAL</text>
+
+      <text x="310" y="240" font-family="Arial" font-size="7" fill="#555" text-anchor="middle">SOPLADOR</text>
+      <text x="310" y="248" font-family="Arial" font-size="7" fill="#555" text-anchor="middle">REGENERATIVO</text>
+    </svg>
+  </div>
+
+  <!-- Characteristics -->
+  <div class="p3-chars">
+    <div class="p3-chars-col">
+      <h3>Características de la Planta</h3>
+      <ul>
+        <li>Sistema secuencial construida en una sola unidad.</li>
+        <li>Construida en concreto resistente a sulfatos.</li>
+        <li>Diseñada con tecnología Laotss.</li>
+        <li>NOM-001-SEMARNAT-2021 GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L.</li>
+      </ul>
+    </div>
+    <div class="p3-chars-col">
+      <h3>Cumplimiento de la Norma Oficial Mexicana</h3>
+      <ul>
+        <li>NOM-001-SEMARNAT-2021 GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L.</li>
+      </ul>
+      <h3 style="margin-top:10px">Reúso o Descarga en:</h3>
+      <ul>
+        <li>NOM-001-SEMARNAT-2021 GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-inner">
+      <div class="footer-dept">
+        <h4>Departamento Comercial</h4>
+        <p>Ing. Manuel Guerrero Orozco<br>E-mail: manuel.guerrero@aclara.mx<br>Tel: 4432094250</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pag3 -->
+
+
+<!-- ════════════════════════════════════════
+     PÁGINA 4 – Términos y condiciones
+     ════════════════════════════════════════ -->
+<div class="pagina" id="pag4">
+
+  <div class="pg-header">
+    <div class="pg-header-inner">
+      <div class="logo-area">
+      </div>
+      <div class="empresa-info">
+        ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
+        RFC: ATA-131127-8U9<br>Tabachín 202,<br>Bellavista, Cuernavaca,<br>Morelos C.P. 62140<br>Tels: 777 364 5092 – 800 225 2728
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="meta-row" style="padding-bottom:4px">
+    <div></div>
+    <div class="quote-bl">
+      <span class="qn">Cotización: <span class="parameter-id">C-1740608454</span></span><br>Fecha de emisión: <span class="today-date"></span>
+    </div>
+  </div>
+  <img src="https://i.imgur.com/u5ag2bp.jpeg" class="term-propuesta"/>
+  <div class="p4-body">
+    <ul class="terms-list">
+      <li><span class="ltr">A.</span><span>Los precios de esta cotización NO incluyen IVA.</span></li>
+      <li><span class="ltr">B.</span><span>Tiempo de entrega: 9 semanas.</span></li>
+      <li><span class="ltr">C.</span><span>Planta instalada en sitio, aplica para tamaños mayores a 0.25 lps o dimensiones mayores a 2.90m de diámetro y 2.44m de alto, en lugar convenido dentro de la República Mexicana, en las condiciones de acceso y nivel de piso establecidas, para otras condiciones de acceso y nivel aplican cargos extras.</span></li>
+      <li><span class="ltr">D.</span><span>Condiciones de pago: 50% de anticipo, 25% contra aviso de embarque y avance de trabajos, 25% contra entrega física.</span></li>
+      <li><span class="ltr">E.</span><span>Aplica solo en caso de precio en USD. El pago podrá realizarse en pesos mexicanos al tipo de cambio del día en que se realice el pago, conforme a lo establecido por el banco de México para obligaciones de pago contraídas en moneda extranjera pagadas en moneda nacional, según el Artículo 8 de la ley monetaria de los Estados Unidos Mexicanos.</span></li>
+      <li><span class="ltr">F.</span><span>Aplican cargos por cancelación: 25% antes de 20 días naturales al pago de anticipo, 35% antes de 30 días naturales y 100% en adelante.</span></li>
+      <li><span class="ltr">G.</span><span>El tiempo de entrega es contado a partir de que el cliente entregue los trabajos de obra civil, el área de trabajo libre y limpia, nos otorgue las condiciones de fácil acceso para la instalación, como losa de cimentación, caseta de equipos y en su caso los pozos desarenador y bombeo, así como del pago del anticipo y nos confirme el voltaje disponible.</span></li>
+      <li><span class="ltr">H.</span><span>El voltaje de alimentación de la PTAR es el que se especifica en la partida, si no se cuenta con el especificado, favor de indicar el disponible para validarlo.</span></li>
+      <li><span class="ltr">I.</span><span>Para dar inicio a los trabajos es necesario que el cliente confirme que existen las condiciones preliminares para ello, en caso contrario el personal de instalaciones y/o construcción se retirará y se cobrará un 2% del total del pedido como gastos extraordinarios.</span></li>
+      <li><span class="ltr">J.</span><span>Las dimensiones de la planta de tratamiento especificadas son aproximadas y pueden cambiar al realizar el cálculo del proyecto de acuerdo a las características del agua a tratar y a las condiciones del lugar de instalación.</span></li>
+      <li><span class="ltr">K.</span><span>Esta propuesta incluye la conexión de línea de agua tratada y línea de retrolavado del filtro de arena no más de 5m de distancia y no más de 1 m de altura.</span></li>
+      <li><span class="ltr">L.</span><span>Esta propuesta incluye servicio de arranque y puesta en marcha sin costo alguno una vez terminado el equipamiento de la planta y hasta tres meses posteriores a la entrega.</span></li>
+      <li><span class="ltr">M.</span><span>Para dar inicio con el arranque y puesta en marcha es necesario que se cuente con la energía eléctrica especificada y un caudal mínimo de agua a tratar del 20% del gasto medio de diseño.</span></li>
+      <li><span class="ltr">N.</span><span>En caso de no existir las condiciones necesarias para el arranque y puesta en marcha al término de los trabajos físicos, la PTAR deberá ser recibida a entera satisfacción del cliente y liquidada al 100%.</span></li>
+      <li><span class="ltr">O.</span><span>Previo al arranque de la planta, el cliente deberá designar al personal que será capacitado por nuestros técnicos para la operación de la planta, además de proporcionar los insumos requeridos.</span></li>
+      <li><span class="ltr">P.</span><span>Esta cotización NO INCLUYE ninguna otra partida, material o servicio que no esté debidamente especificado por escrito en la misma.</span></li>
+      <li><span class="ltr">Q.</span><span>Garantía de funcionamiento y cumplimiento de la Norma correspondiente, por escrito.</span></li>
+      <li><span class="ltr">R.</span><span>Incluye un año de garantía después de la puesta en marcha o de la instalación, siempre y cuando sea operada de acuerdo a lo establecido en el Manual de Operación y Mantenimiento.</span></li>
+      <li><span class="ltr">S.</span><span>Vigencia de la propuesta: 24/08/2025, después de este tiempo favor de corroborar el precio antes de realizar la compra.</span></li>
+    </ul>
+
+    <p style="font-size:9.5px;margin:10px 0 6px;color:#444">
+      Revise los alcances del cliente en: <span style="color:var(--blue2)">https://crm-aclara.com/terminos-adicionales</span><br>
+      *Aclara se reserva el derecho a hacer cambios necesarios en materiales y especificaciones de la PTAR para asegurar su óptimo funcionamiento.
+    </p>
+    <p style="font-size:9.5px;margin-bottom:10px;color:#444">Para confirmar la compra, favor de realizar su depósito a la cuenta correspondiente, de acuerdo a la moneda a manejar.</p>
+
+    <div class="bank-grid">
+      <div class="bank-item"><b>MXN – BANAMEX</b>Cuenta: 7006-3614805<br>CLABE: 002540700636148055</div>
+      <div class="bank-item"><b>MXN – BANORTE</b>Cuenta: 0220765099<br>CLABE: 072540002207650998</div>
+      <div class="bank-item"><b>MXN – SANTANDER</b>Cuenta: 65509457084<br>CLABE: 014540655094570845</div>
+      <div class="bank-item"><b>USD – SANTANDER</b>Cuenta: 82-50109322-7<br>CLABE: 014540825010932271</div>
+      <div class="bank-item"><b>USD – BANAMEX</b>Cuenta: 7002-9866323<br>CLABE: 002540700298663237</div>
+    </div>
+
+    <p class="terms-note">Enviar comprobante de pago a su asesor comercial</p>
+  </div>
+
+  <div class="pg-footer">
+    <div class="pg-footer-inner">
+      <div class="footer-dept">
+        <h4>Departamento Comercial</h4>
+        <p>Ing. Manuel Guerrero Orozco<br>E-mail: manuel.guerrero@aclara.mx<br>Tel: 4432094250</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pag4 -->
+
+
+<script>
+async function exportarPDF() {
+  const { jsPDF } = window.jspdf;
+  const paginas = ['pag1','pag2','pag3','pag4'].map(id => document.getElementById(id));
+  const loading = document.getElementById('loading');
+  loading.style.display = 'inline';
+
+  try {
+    const pdf = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+
+    for (let i = 0; i < paginas.length; i++) {
+      const canvas = await html2canvas(paginas[i], {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: '#ffffff',
+        logging: false,
+        width: 794,
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      if (i > 0) pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, '', 'FAST');
+    }
+
+    pdf.save('cotizacion-aclara-C-1740608454.pdf');
+  } catch(e) {
+    alert('Error al generar PDF: ' + e.message);
+    console.error(e);
+  } finally {
+    loading.style.display = 'none';
+  }
+}
+const hoy = new Date();
+  const dia = String(hoy.getDate()).padStart(2, '0');
+  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+  const año = hoy.getFullYear();
+  
+  document.querySelectorAll('.today-date').forEach(el => {
+    el.textContent = `${dia}/${mes}/${año}`;
+  });
+</script>
+</body>
+</html>

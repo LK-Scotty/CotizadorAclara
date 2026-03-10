@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -72,7 +73,6 @@ body{
   background:#fff;
   position:relative;
   overflow:hidden;
-  box-shadow:0 3px 20px rgba(0,0,0,.14);
 }
 
 /* ══ SHARED HEADER ══ */
@@ -361,6 +361,189 @@ body{
   margin-top:10px;font-size:9.5px;color:#777;
   font-style:italic;text-align:center;
 }
+.page-title-box{
+  background:#005091;
+  color:#fff;
+  font-family:'Open Sans',sans-serif;
+  font-size:16px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  line-height:1.35;
+  padding:14px 32px 14px 28px;
+  border-radius:0 46px 46px 0;
+  display:inline-block;
+  margin:24px 0 0 0;
+  min-width:340px;
+}
+
+/* ══════════════════════════════════════
+   PAGE 5 – DIAGRAMA DE FLUJO
+   ══════════════════════════════════════ */
+
+.p5-content{
+  padding:20px 28px 28px;
+}
+
+/* Top section: diagrama image (left ~55%) + spacer */
+.p5-top{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:20px;
+}
+
+/* Image placeholder — replace with <img> */
+.img-ph{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  color:#aaa;font-size:10px;gap:5px;
+  text-align:center;
+  font-family:'Open Sans',sans-serif;
+}
+.img-ph-icon{font-size:28px;opacity:.35}
+
+/* Full-width diagram image area */
+.diag-flujo-ph{
+  grid-column:1/-1;
+}
+
+/* Bottom section: text left, isometric right */
+.p5-bottom{
+  display:grid;
+  grid-template-columns:30% 1fr;
+  gap:20px;
+}
+
+/* Description items A B C D */
+.desc-items{display:flex;flex-direction:column;gap:12px;margin-top:-102px}
+
+.desc-item{}
+.desc-item-header{
+  display:flex;align-items:center;gap:5px;
+  margin-bottom:3px;
+}
+.desc-letter{
+  font-size:10px;
+  font-weight:700;
+  color:red;
+}
+.desc-bar{
+  width:2px;height:14px;
+  background:black;
+  margin:0 2px;
+  flex-shrink:0;
+}
+.desc-label{
+  font-size:10px;
+  font-weight:700;
+  color:var(--text);
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.desc-body{
+  font-size:9px;
+  color:var(--text);
+  line-height:1.7;
+  text-align:justify;
+  text-transform:uppercase;
+  font-weight:400;
+}
+
+/* Isométrico */
+.iso-col{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.iso-ph{width:100%;flex:1;min-height:300px}
+.iso-caption{
+  font-family:'Open Sans',sans-serif;
+  font-size:10.5px;font-weight:700;
+  text-align:center;
+  letter-spacing:.04em;
+  color:var(--text);
+  text-transform:uppercase;
+  line-height:1.4;
+}
+
+/* ══════════════════════════════════════
+   PAGE 6 – PLANO DE CONJUNTO
+   ══════════════════════════════════════ */
+
+.p6-content{
+  padding:20px 28px 28px;
+  display:grid;
+  grid-template-columns:1fr 220px;
+  gap:24px;
+}
+
+/* Left: two planos stacked */
+.planos-col{display:flex;flex-direction:column;gap:6px;justify-content: center;align-items: center;}
+.plano-ph{width:100%;}
+.plano-label{
+  font-size:9.5px;font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:2px;
+  letter-spacing:.04em;
+  color:var(--text);
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+
+/* Right: simbología + notas */
+.simb-col{}
+
+.simb-heading{
+  font-family:'Open Sans',sans-serif;
+  font-size:13px;font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  color:var(--text);
+  border-bottom:1.5px solid var(--text);
+  padding-bottom:5px;
+  margin-bottom:12px;
+}
+
+.simb-items{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.simb-item{display:flex;align-items:center;gap:10px;font-size:9.5px;color:var(--text);font-weight:700;text-transform:uppercase;line-height:1.4}
+
+/* PCC circle outline (cliente) */
+.pcc-circle{
+  width:30px;height:30px;border-radius:50%;
+  border:2px solid red;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7px;font-weight:700;color:black;
+  flex-shrink:0;font-family:'Open Sans',sans-serif;
+  letter-spacing:-.2px;
+}
+/* PCC circle filled (aclara) */
+.pcc-circle.filled{
+  background:var(--teal);
+  border-color:var(--teal);
+  color:#fff;
+}
+
+.notas-ol{
+  list-style:none;padding:0;
+  font-size:8.8px;color:var(--text);line-height:1.7;
+  text-transform:uppercase;font-weight:400;
+}
+.notas-ol li{
+  display:grid;grid-template-columns:14px 1fr;
+  gap:3px;margin-bottom:5px;
+}
+.notas-ol li .num{font-weight:700;color:var(--text)}
+
+.nota-extra{
+  margin-top:12px;
+  font-size:8.5px;color:red;
+  line-height:1.7;text-transform:uppercase;
+}
+.nota-extra b{font-weight:700}
+.nota-extra p{margin-bottom:6px}
+
+.cot-1{
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -380,7 +563,7 @@ body{
 <div class="pagina" id="pag1">
 
   <!-- HEADER -->
-  <div class="pg-header">
+  <div class="pg-header cot-1">
     <div class="pg-header-inner">
       <div class="logo-area">
       </div>
@@ -396,7 +579,7 @@ body{
   </div>
 
   <!-- META -->
-  <div class="meta-row">
+  <div class="meta-row cot-1">
     <div class="client-bl">
       <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
       <span class="cl">Lugar de instalación:</span><br>
@@ -409,263 +592,74 @@ body{
     </div>
   </div>
 
-  <!-- SECTION TITLE -->
-  <img src="https://i.imgur.com/j930Jn1.jpeg" class="desc-propuesta"/>
+  <!----------FIRST ONES------------>
+<div class="pagina cot-1" id="pag5">
 
-  <div class="p1-body">
-    <div class="p1-left">
-      <p>El presente documento integra las propuestas económicas para:</p>
-      <ul>
-        <li>Pruebas piloto y de laboratorio para evaluación de eficiencia de dos sistemas de tratamiento para cumplimiento de la NOM-001-SEMARNAT-2021.</li>
-        <li>Planta de tratamiento de aguas residuales con capacidad para tratar 5 lps (propuesta basada en diseño preliminar)</li>
-      </ul>
-      <table class="mini-table">
-        <thead><tr>
-          <th>Módelo</th><th>Largo</th><th>Ancho</th><th>Altura</th><th>Capacidad</th>
-        </tr></thead>
-        <tbody><tr>
-          <td>Carga Orgánica DBO5</td><td>12.19 m</td><td>2.43 m</td><td>2.89 m</td><td>5.0 lps</td>
-        </tr></tbody>
-      </table>
-    </div>
-
-    <!-- Container 3D SVG -->
-    <div>
-      <svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(2px 5px 10px rgba(0,0,0,.22))">
-        <!-- Main front face -->
-        <rect x="8" y="50" width="252" height="148" rx="3" fill="#25AACC"/>
-        <!-- Top face -->
-        <polygon points="8,50 62,18 314,18 260,50" fill="#3CCCE0"/>
-        <!-- Right face -->
-        <polygon points="260,50 314,18 314,166 260,198" fill="#1488A8"/>
-        <!-- Horizontal midline -->
-        <line x1="8" y1="124" x2="260" y2="124" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-        <!-- Vertical lines (corrugation) -->
-        <line x1="50"  y1="52" x2="50"  y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
-        <line x1="95"  y1="52" x2="95"  y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
-        <line x1="115" y1="52" x2="115" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
-        <line x1="175" y1="52" x2="175" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
-        <line x1="215" y1="52" x2="215" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
-        <line x1="235" y1="52" x2="235" y2="196" stroke="rgba(255,255,255,.13)" stroke-width="1"/>
-        <!-- Corner posts -->
-        <rect x="8"   y="48" width="7" height="150" rx="1" fill="rgba(0,0,0,.22)"/>
-        <rect x="245" y="48" width="7" height="150" rx="1" fill="rgba(0,0,0,.22)"/>
-        <!-- Door divider -->
-        <line x1="136" y1="50" x2="136" y2="198" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>
-        <!-- Door handles -->
-        <rect x="130" y="118" width="5" height="12" rx="2" fill="rgba(0,0,0,.35)"/>
-        <rect x="137" y="118" width="5" height="12" rx="2" fill="rgba(0,0,0,.35)"/>
-        <!-- Aclara wave logo on side -->
-        <circle cx="48" cy="96" r="16" fill="rgba(255,255,255,.18)"/>
-        <path d="M38 98 Q42 92 48 95 Q54 98 58 92" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/>
-        <!-- Aclara text -->
-        <text x="72" y="104" font-family="Arial" font-size="20" font-weight="900" fill="rgba(255,255,255,.9)" letter-spacing=".5">Aclara</text>
-        <!-- Vent top -->
-        <rect x="190" y="22" width="28" height="9" rx="2" fill="rgba(0,80,110,.45)"/>
-        <!-- Corner fittings -->
-        <rect x="8"   y="193" width="18" height="10" rx="1" fill="#0E7A96"/>
-        <rect x="242" y="193" width="18" height="10" rx="1" fill="#0E7A96"/>
-        <rect x="62"  y="13"  width="14" height="8"  rx="1" fill="#0E7A96"/>
-        <rect x="300" y="13"  width="14" height="8"  rx="1" fill="#0E7A96"/>
-      </svg>
-    </div>
+  <!-- Title box -->
+  <div class="page-title-box">
+    Diagrama de Flujo<br>Compack 003 CD Inoxidable
   </div>
 
-  <!-- DIAGRAMS -->
-  <div class="diagrams-area">
+  <div class="p5-content">
 
-    <!-- Plant view -->
-    <div class="diag-row">
-      <div class="diag-lbl">2.43</div>
-      <div class="diag-svg-wrap">
-        <svg viewBox="0 0 700 92" xmlns="http://www.w3.org/2000/svg" style="width:100%;border:1px solid #aaa;display:block">
-          <rect width="700" height="92" fill="#f8f9fb"/>
-          <rect x="1" y="1" width="698" height="90" fill="none" stroke="#555" stroke-width="1.3"/>
-          <!-- Reactor Anóxico top -->
-          <rect x="1" y="1" width="112" height="46" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="57" y="20" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
-          <text x="57" y="30" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">ANÓXICO</text>
-          <!-- Reactor Anaeróbio bottom -->
-          <rect x="1" y="47" width="112" height="44" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="57" y="68" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
-          <text x="57" y="78" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">ANAERÓBIO</text>
-          <!-- Reactor Oxidación Total -->
-          <rect x="113" y="1" width="188" height="90" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="207" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR DE</text>
-          <text x="207" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">OXIDACIÓN</text>
-          <text x="207" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TOTAL</text>
-          <!-- Reactor Post-Anóxico -->
-          <rect x="301" y="1" width="96" height="90" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="349" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
-          <text x="349" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">POST-ANÓXICO</text>
-          <!-- Sedimentador Secundario -->
-          <rect x="397" y="1" width="112" height="90" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="453" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SEDIMENTADOR</text>
-          <text x="453" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SECUNDARIO</text>
-          <!-- Tanque Contacto Cloro -->
-          <rect x="509" y="1" width="100" height="90" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="559" y="37" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TANQUE DE</text>
-          <text x="559" y="48" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CONTACTO</text>
-          <text x="559" y="59" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">DE CLORO</text>
-          <!-- Caseta Equipos -->
-          <rect x="609" y="1" width="90" height="90" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="654" y="42" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CASETA DE</text>
-          <text x="654" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">EQUIPOS</text>
-        </svg>
-        <div class="diag-dim">
-          <div class="diag-dim-line"></div>
-          <span class="diag-dim-txt">— 12.19 —</span>
-          <div class="diag-dim-line"></div>
+    <!-- Full-width diagram image -->
+    <div class="img-ph diag-flujo-ph">
+      <img src="https://i.imgur.com/o43QuH9.png" style="width:100%"/>
+    </div>
+
+    <!-- Bottom: descriptions + isométrico -->
+    <div class="p5-bottom">
+
+      <!-- LEFT: A B C D -->
+      <div class="desc-items">
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">A</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Cribado</span>
+          </div>
+          <p class="desc-body">El agua residual entra al sistema de tratamiento e inmediatamente pasa por una rejilla que retiene sólidos gruesos que podrían taponar válvulas, tuberías, así como generar un desgaste excesivo en bombas, por esta razón los sistemas del pretratamiento son colocados antes del cárcamo de bombeo. Las operaciones realizadas con este propósito son rejillas para retener sólidos gruesos, desarenador para retener arena, ceniza o grava y trampa de grasas para remoción de grasa y aceite (en caso de requerirse). Posteriormente el agua pasa al carcamo donde será bombeada a la planta de tratamiento.</p>
+        </div>
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">B</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Reactor de Oxidacion Total</span>
+          </div>
+          <p class="desc-body">Su función principal es la degradación biológica de los contaminantes órganicos mediante un consorcio de microorganismos. El mecanismo que tiene lugar es el siguiente: las bacterias consumen la materia orgánica presente en el agua al incorporarla a su metabolismo como fuente de carbono, que le permite obtener energía para desarrollar sus funciones.</p>
+        </div>
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">C</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Sedimentador</span>
+          </div>
+          <p class="desc-body">Aquí se realiza el proceso de separación del agua tratada y el lodo. El agua tratada fluye hacia el canal vertedor que lo guía hacia el tubo de desinfección.</p>
+        </div>
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">D</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Desinfección</span>
+          </div>
+          <p class="desc-body">Aquí se aplica cloro para desinfectar el agua con el objetivo de eliminar las bacterias causantes de enfermedades.</p>
+        </div>
+
+      </div><!-- /desc-items -->
+
+      <!-- RIGHT: Isométrico -->
+      <div class="iso-col">
+        <div class="img-ph iso-ph">
+          <img src="https://i.imgur.com/YxaDBgz.png" style="width:100%">
         </div>
       </div>
-    </div>
 
-    <!-- Cross-section view -->
-    <div class="diag-row">
-      <div class="diag-lbl">2.89</div>
-      <div class="diag-svg-wrap">
-        <svg viewBox="0 0 700 112" xmlns="http://www.w3.org/2000/svg" style="width:100%;border:1px solid #aaa;display:block">
-          <rect width="700" height="112" fill="#f8f9fb"/>
-          <rect x="1" y="1" width="698" height="110" fill="none" stroke="#555" stroke-width="1.3"/>
-          <!-- water level line teal -->
-          <line x1="113" y1="28" x2="509" y2="28" stroke="#0EB5C8" stroke-width="1.5" stroke-dasharray="4,2"/>
-          <!-- Reactor Anóxico -->
-          <rect x="1" y="1" width="112" height="110" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="57" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
-          <text x="57" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">ANÓXICO</text>
-          <!-- Reactor Oxidación Total (with water fill) -->
-          <rect x="113" y="1" width="188" height="110" fill="none" stroke="#666" stroke-width=".9"/>
-          <rect x="114" y="29" width="186" height="81" fill="rgba(14,181,200,.1)"/>
-          <text x="207" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR DE</text>
-          <text x="207" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">OXIDACIÓN</text>
-          <text x="207" y="75" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TOTAL</text>
-          <!-- Reactor Post-Anóxico -->
-          <rect x="301" y="1" width="96" height="110" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="349" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">REACTOR</text>
-          <text x="349" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">POST-ANÓXICO</text>
-          <!-- Sedimentador (diagonal) -->
-          <rect x="397" y="1" width="112" height="110" fill="none" stroke="#666" stroke-width=".9"/>
-          <line x1="509" y1="44" x2="397" y2="110" stroke="#666" stroke-width="1"/>
-          <text x="453" y="28" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SEDIMENTADOR</text>
-          <text x="453" y="38" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">SECUNDARIO</text>
-          <!-- Tanque Cloro -->
-          <rect x="509" y="1" width="100" height="110" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="559" y="46" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">TANQUE DE</text>
-          <text x="559" y="57" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CONTACTO</text>
-          <text x="559" y="68" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">DE CLORO</text>
-          <!-- Caseta -->
-          <rect x="609" y="1" width="90" height="110" fill="none" stroke="#666" stroke-width=".9"/>
-          <text x="654" y="53" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">CASETA DE</text>
-          <text x="654" y="64" text-anchor="middle" font-size="7" fill="#333" font-family="Arial" font-weight="700">EQUIPOS</text>
-        </svg>
-        <div class="diag-dim">
-          <div class="diag-dim-line"></div>
-          <span class="diag-dim-txt">— 12.19 —</span>
-          <div class="diag-dim-line"></div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /diagrams -->
-
-  <!-- FOOTER -->
-  <div class="pg-footer">
-    <div class="pg-footer-inner">
-      <div class="footer-dept">
-        <h4>Departamento Comercial</h4>
-        <p>Ing. Manuel Guerrero Orozco<br>
-        E-mail: manuel.guerrero@aclara.mx<br>
-        Tel: 4432094250</p>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /pag1 -->
-
-
-<!-- ════════════════════════════════════════
-     PÁGINA 2 – Partidas / Precios
-     ════════════════════════════════════════ -->
-<div class="pagina" id="pag2">
-
-  <div class="pg-header">
-    <div class="pg-header-inner">
-      <div class="logo-area">
-      </div>
-      <div class="empresa-info">
-        ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
-        RFC: ATA-131127-8U9<br>Tabachín 202,<br>Bellavista, Cuernavaca,<br>Morelos C.P. 62140<br>Tels: 777 364 5092 – 800 225 2728
-      </div>
-    </div>
-  </div>
-
-  <div class="meta-row">
-    <div class="client-bl">
-      <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
-      <span class="cl">Lugar de instalación:</span><br>
-      <span class="parameter-address"></span><br>
-      <span class="parameter-state"></span>
-    </div>
-    <div class="quote-bl">
-      <span class="qn">Cotización: <span class="parameter-id">C-1740608454</span></span><br>
-      Fecha de emisión: <span class="today-date"></span>
-    </div>
-  </div>
-
-  <img src="https://i.imgur.com/j930Jn1.jpeg" class="desc-propuesta"/>
-
-  <div class="p2-body">
-
-    <!-- Partida 1 -->
-    <div class="partida">
-      <div class="partida-img">
-        <!-- small container thumbnail -->
-        <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
-          <rect x="4" y="20" width="90" height="56" rx="2" fill="#25AACC"/>
-          <polygon points="4,20 26,6 116,6 94,20" fill="#3CCCE0"/>
-          <polygon points="94,20 116,6 116,60 94,74" fill="#1488A8"/>
-          <line x1="18" y1="22" x2="18" y2="74" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
-          <line x1="38" y1="22" x2="38" y2="74" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
-          <line x1="70" y1="22" x2="70" y2="74" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
-          <text x="28" y="52" font-family="Arial" font-size="8" font-weight="900" fill="rgba(255,255,255,.85)">Aclara</text>
-        </svg>
-      </div>
-      <div class="partida-desc">
-        <h3>PTAR Aquapack Aclara 001-SC Cap. 0.40 LPS</h3>
-        Capacidad: 34.56 m³/Día. Planta de tratamiento de agua residual tipo portátil. Cumplimiento de la NOM-001-SEMARNAT-2021 Para Descarga a suelo tipo cárstico.<br>
-        * Se consideran los parámetros máximos de descargas típicas (DBO5 = 1970 ppm, SST = 350 mg/l, G y A = 70 mg/l); NT: 570 mg/l, FT: 88 mg/l para descargas atípicas, se requieren ajustes en el diseño y precio.<br>
-        Dimensiones Ancho: 2.43m. Alto: 2.89m. Largo: 12.19m. Peso: 6755.5 Kg.<br>
-        Esta PTAR será suministrada para trabajar con un voltaje de 220/V trifásico, 3 fases, 4 hilos. Material de acero al carbón con acabado en poliuretano. Diseño compacto (Sistema Secuencial-Tecnología LAOTSS), con conexiones de entrada y salida en contenedor lista para instalarse y operar, Incluye: reactor anóxico, anaeróbio y post-anóxico al interior.<br>
-        Sistema automatizado y TODO INCLUIDO: Reactor, equipamiento, caseta de operación, rejilla de desbaste de sólidos y sistema reductor de lodos de desecho.
-      </div>
-      <div class="partida-price">$ 1,706,506.40</div>
-    </div>
-
-    <!-- Partida 2 -->
-    <div class="partida" style="grid-template-columns:1fr auto">
-      <div class="partida-desc">
-        <h3>Bomba Dosificadora de Metanol</h3>
-        Suministro e instalacion de bomba dosificadora de impulsos magnéticos marca lmi o similar, modelo B131, con cabezal y conexiones de 0.375" o.d. en pvc, bolas en cerámica, diafragma en fluorofilmtm y cartucho de la válvula en pvc/polyprel. flujo de 0.24 LPM @ 50 psi @ 100 cpm (carreras por minuto). Incluye tanque termoplastico con capacidad para 100 l. Incluye: material, mano de obra, equipo, herramienta y lo necesario para su correcta instalación.
-      </div>
-      <div class="partida-price">$ 32,400.00</div>
-    </div>
-
-    <!-- Partida 3 -->
-    <div class="partida" style="grid-template-columns:1fr auto">
-      <div class="partida-desc">
-        <h3>Sensor de ORP</h3>
-        Suministro de instalacion de 3 sensores de ORP modelo SUP-ORP60, instalados en reactor anóxico, anaeróbio y post-anóxico, Incluye transmisor y conexión con medición física en campo, material, mano de obra, equipo, herramienta y lo necesario para su correcta instalacion.
-      </div>
-      <div class="partida-price">$ 29,000.00</div>
-    </div>
-
-  </div><!-- /p2-body -->
-
-  <div class="params-block">
-    <h3>Parámetros para cumplir con la NOM-001 para descarga a SUELO TIPO CÁRSTICO:</h3>
-    <p>GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L</p>
-    <p><b>Tiempo de entrega: 12 Semanas.</b></p>
-  </div>
+    </div><!-- /p5-bottom -->
+  </div><!-- /p5-content -->
 
   <div class="pg-footer">
     <div class="pg-footer-inner">
@@ -676,26 +670,30 @@ body{
     </div>
   </div>
 
-</div><!-- /pag2 -->
+</div><!-- /pag5 -->
 
 
 <!-- ════════════════════════════════════════
-     PÁGINA 3 – Diagrama de instalación
+     PÁGINA 6 – PLANO DE CONJUNTO
      ════════════════════════════════════════ -->
-<div class="pagina" id="pag3">
-
-  <div class="pg-header">
+<div class="pagina cot-1" id="pag6">
+<div class="pg-header cot-1">
     <div class="pg-header-inner">
       <div class="logo-area">
       </div>
       <div class="empresa-info">
         ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
-        RFC: ATA-131127-8U9<br>Tabachín 202,<br>Bellavista, Cuernavaca,<br>Morelos C.P. 62140<br>Tels: 777 364 5092 – 800 225 2728
+        RFC: ATA-131127-8U9<br>
+        Tabachín 202,<br>
+        Bellavista, Cuernavaca,<br>
+        Morelos C.P. 62140<br>
+        Tels: 777 364 5092 – 800 225 2728
       </div>
     </div>
   </div>
 
-  <div class="meta-row">
+  <!-- META -->
+  <div class="meta-row cot-1">
     <div class="client-bl">
       <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
       <span class="cl">Lugar de instalación:</span><br>
@@ -707,116 +705,76 @@ body{
       Fecha de emisión: <span class="today-date"></span>
     </div>
   </div>
-
-  <img src="https://i.imgur.com/CkU1vwr.jpeg" class="diag-propuesta"/>
-
-  <div class="p3-code">PK 003CD</div>
-
-  <!-- Installation diagram SVG -->
-  <div class="p3-diagram-img">
-    <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="width:100%">
-      <!-- Ground platform -->
-      <polygon points="30,220 670,220 700,260 0,260" fill="#8B7355"/>
-      <polygon points="30,220 670,220 700,260 0,260" fill="url(#groundGrad)"/>
-      <defs>
-        <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#9B8366"/>
-          <stop offset="100%" stop-color="#7A6448"/>
-        </linearGradient>
-        <linearGradient id="tankGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#2a2a2a"/>
-          <stop offset="100%" stop-color="#111"/>
-        </linearGradient>
-      </defs>
-
-      <!-- Main structure (concrete PTAR) -->
-      <rect x="80" y="110" width="400" height="112" fill="#C8C8C8"/>
-      <rect x="80" y="108" width="400" height="6"   fill="#B0B0B0"/>
-      <!-- Internal walls -->
-      <rect x="130" y="110" width="3" height="112" fill="#A8A8A8"/>
-      <rect x="200" y="110" width="3" height="112" fill="#A8A8A8"/>
-      <rect x="330" y="110" width="3" height="112" fill="#A8A8A8"/>
-      <rect x="400" y="110" width="3" height="112" fill="#A8A8A8"/>
-      <!-- Dark zones inside -->
-      <rect x="133" y="112" width="64"  height="108" fill="#9A9A9A"/>
-      <rect x="203" y="112" width="124" height="108" fill="#868686"/>
-      <!-- Sedimentador diagonal -->
-      <polygon points="333,112 400,112 400,222 333,222" fill="#9A9A9A"/>
-      <line x1="400" y1="150" x2="333" y2="222" stroke="#888" stroke-width="2"/>
-
-      <!-- Black tank (retiro de lodo) -->
-      <ellipse cx="530" cy="195" rx="36" ry="10" fill="#1a1a1a"/>
-      <rect x="494" y="130" width="72" height="65" fill="url(#tankGrad)" rx="2"/>
-      <ellipse cx="530" cy="130" rx="36" ry="10" fill="#333"/>
-
-      <!-- Small filter box -->
-      <rect x="590" y="185" width="50" height="36" fill="#888" rx="2"/>
-      <rect x="590" y="183" width="50" height="6"  fill="#777" rx="1"/>
-
-      <!-- Flow pipes (blue) -->
-      <path d="M80 165 L40 165 L40 250" stroke="#1B73BE" stroke-width="2.5" fill="none"/>
-      <path d="M480 145 L530 145 L530 130" stroke="#0EB5C8" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
-      <path d="M566 195 L590 195" stroke="#0EB5C8" stroke-width="2" fill="none"/>
-      <path d="M615 221 L615 250" stroke="#0EB5C8" stroke-width="2.5" fill="none"/>
-
-      <!-- Labels -->
-      <text x="30"  y="105" font-family="Arial" font-size="7.5" fill="#333" font-weight="700">INFLUENTE</text>
-      <text x="36"  y="240" font-family="Arial" font-size="7"   fill="#555">↓</text>
-
-      <text x="85"  y="104" font-family="Arial" font-size="7"   fill="#333" font-weight="700">PRETRATAMIENTO</text>
-      <text x="68"  y="240" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">DESARENADOR</text>
-      <text x="110" y="248" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">TRAMPA</text>
-      <text x="110" y="256" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">DE GRASAS</text>
-      <text x="152" y="248" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">CÁRCAMO</text>
-      <text x="152" y="256" font-family="Arial" font-size="6.5" fill="#555" text-anchor="middle">DE BOMBEO</text>
-
-      <text x="205" y="100" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">CRIBADO</text>
-      <line x1="205" y1="102" x2="205" y2="110" stroke="#555" stroke-width=".8"/>
-
-      <text x="270" y="92"  font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">REACTOR DE</text>
-      <text x="270" y="100" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">OXIDACIÓN TOTAL</text>
-      <line x1="270" y1="102" x2="270" y2="110" stroke="#555" stroke-width=".8"/>
-
-      <text x="370" y="100" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">SEDIMENTADOR</text>
-      <line x1="370" y1="102" x2="370" y2="110" stroke="#555" stroke-width=".8"/>
-
-      <text x="450" y="135" font-family="Arial" font-size="7" fill="#333" font-weight="700">DEMASÍAS</text>
-      <text x="450" y="150" font-family="Arial" font-size="7" fill="#333" font-weight="700">CLORACIÓN</text>
-
-      <text x="532" y="122" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">RETIRO DE LODO</text>
-
-      <text x="610" y="182" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">FILTRO DE ARENA</text>
-
-      <text x="615" y="262" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">AGUA TRATADA</text>
-      <text x="615" y="270" font-family="Arial" font-size="7" fill="#333" font-weight="700" text-anchor="middle">DISPOSICIÓN FINAL</text>
-
-      <text x="310" y="240" font-family="Arial" font-size="7" fill="#555" text-anchor="middle">SOPLADOR</text>
-      <text x="310" y="248" font-family="Arial" font-size="7" fill="#555" text-anchor="middle">REGENERATIVO</text>
-    </svg>
+  <!-- Title box -->
+  <div class="page-title-box">
+    Plano de Conjunto<br>Compack 003 CD Inoxidable
   </div>
 
-  <!-- Characteristics -->
-  <div class="p3-chars">
-    <div class="p3-chars-col">
-      <h3>Características de la Planta</h3>
-      <ul>
-        <li>Sistema secuencial construida en una sola unidad.</li>
-        <li>Construida en concreto resistente a sulfatos.</li>
-        <li>Diseñada con tecnología Laotss.</li>
-        <li>NOM-001-SEMARNAT-2021 GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L.</li>
-      </ul>
+  <div class="p6-content">
+
+    <!-- LEFT: planos -->
+    <div class="planos-col">
+
+      <!-- Planta de Conjunto image -->
+      <div class="img-ph plano-ph" style="padding-bottom: 32px">
+        <img src="https://i.imgur.com/G3b4HGQ.png" style="width:100%"/>
+      </div>
+
+      <!-- Perfil Esquemático image -->
+      <div class="img-ph plano-ph">
+        <img src="https://i.imgur.com/ADlxsal.png" style="width:100%"/>
+      </div>
+
     </div>
-    <div class="p3-chars-col">
-      <h3>Cumplimiento de la Norma Oficial Mexicana</h3>
-      <ul>
-        <li>NOM-001-SEMARNAT-2021 GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L.</li>
-      </ul>
-      <h3 style="margin-top:10px">Reúso o Descarga en:</h3>
-      <ul>
-        <li>NOM-001-SEMARNAT-2021 GyA; 15mg/l, DQO; 60mg/l, SST; 20mg/l, Nt; 15mg/l, Pt; 5mg/l, Coli; 50NMP/100 ml, HH, 1h/L.</li>
-      </ul>
-    </div>
-  </div>
+
+    <!-- RIGHT: simbología + notas -->
+    <div class="simb-col">
+
+      <div class="simb-heading">Simbologia de Alcances</div>
+
+      <div class="simb-items">
+        <div class="simb-item">
+          <div class="pcc-circle">PCC</div>
+          <span>Trabajos por<br>cuenta del cliente</span>
+        </div>
+        <div class="simb-item">
+          <img src="https://i.imgur.com/mSIgdnn.png" style="width: 30px;">
+          <span>Trabajos por<br>cuenta de Aclara</span>
+        </div>
+      </div>
+
+      <ol class="notas-ol">
+        <li>
+          <span class="num">1.</span>
+          <span>El cliente será responsable de suministrar la energía eléctrica conforme a lo indicado en el diagrama unifilar, en el área de equipos de la PTAR y en el área del sistema de bombeo. El interruptor del cliente no deberá ubicarse a más de 1.00 m de distancia del área indicada en planos.</span>
+        </li>
+        <li>
+          <span class="num">2.</span>
+          <span>Será responsabilidad del cliente realizar la conexión de la línea de demasías de agua cruda del cárcamo al punto de desfogue correspondiente.</span>
+        </li>
+        <li>
+          <span class="num">3.</span>
+          <span>Los diámetros y especificaciones de las tuberías no podrán modificarse a criterio del constructor, ya que cualquier cambio puede afectar el correcto funcionamiento del sistema. En caso de requerirse un ajuste, deberá solicitarse previamente al departamento de proyectos.</span>
+        </li>
+        <li>
+          <span class="num">4.</span>
+          <span>La construcción de la losa de cimentación, pozo doble y caseta de equipos no forma parte de los alcances del contrato. Será responsabilidad del cliente la preparación del terreno, la construcción de las unidades y la obtención de los permisos necesarios para su ejecución.</span>
+        </li>
+        <li>
+          <span class="num">5.</span>
+          <span>Las vialidades, banquetas, áreas verdes, iluminación exterior y cercado perimetral no están incluidos dentro de los alcances del contrato.</span>
+        </li>
+      </ol>
+
+      <div class="nota-extra">
+        <p><b>Nota:</b> &nbsp;El presente plano es de carácter informativo y no es apto para construcción, ya que únicamente describe las características generales de las unidades.</p>
+        <p>Las unidades podrán presentar modificaciones en su versión final.</p>
+        <p>La presente propuesta se elabora con base en los alcances establecidos en la propuesta económica.</p>
+      </div>
+
+    </div><!-- /simb-col -->
+
+  </div><!-- /p6-content -->
 
   <div class="pg-footer">
     <div class="pg-footer-inner">
@@ -827,8 +785,7 @@ body{
     </div>
   </div>
 
-</div><!-- /pag3 -->
-
+</div>
 
 <!-- ════════════════════════════════════════
      PÁGINA 4 – Términos y condiciones
@@ -909,7 +866,9 @@ body{
 <script>
 async function exportarPDF() {
   const { jsPDF } = window.jspdf;
-  const paginas = ['pag1','pag2','pag3','pag4'].map(id => document.getElementById(id));
+  var paginas = ['pag5','pag6','pag4']
+  .map(id => document.getElementById(id))
+  .filter(el => el !== null);
   const loading = document.getElementById('loading');
   loading.style.display = 'inline';
 
@@ -939,6 +898,8 @@ async function exportarPDF() {
     loading.style.display = 'none';
   }
 }
+document.addEventListener('DOMContentLoaded', () => {
+
   const hoy = new Date();
   const dia = String(hoy.getDate()).padStart(2, '0');
   const mes = String(hoy.getMonth() + 1).padStart(2, '0');
@@ -960,6 +921,16 @@ async function exportarPDF() {
   document.querySelectorAll('.parameter-state').forEach(el => {
     el.textContent = params.get("ciudad");
   });
+  if(params.get("cotizacion")==1){
+    document.querySelectorAll('.cot-1').forEach(el => {
+      el.style.display = 'block';
+    });
+    paginas = ['pag5','pag6','pag4']
+    .map(id => document.getElementById(id))
+    .filter(el => el !== null);
+  }
+  
+});
 
 </script>
 </body>

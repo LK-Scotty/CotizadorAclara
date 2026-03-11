@@ -541,7 +541,7 @@ body{
 .nota-extra b{font-weight:700}
 .nota-extra p{margin-bottom:6px}
 
-.cot-1{
+.cot-1,.cot-2{
   display: none;
 }
 </style>
@@ -560,10 +560,9 @@ body{
 <!-- ════════════════════════════════════════
      PÁGINA 1 – Descripción de la propuesta
      ════════════════════════════════════════ -->
-<div class="pagina" id="pag1">
-
-  <!-- HEADER -->
-  <div class="pg-header cot-1">
+  <!----------FIRST ONES------------>
+<div class="pagina cot-1" id="pag5">
+<div class="pg-header">
     <div class="pg-header-inner">
       <div class="logo-area">
       </div>
@@ -579,7 +578,7 @@ body{
   </div>
 
   <!-- META -->
-  <div class="meta-row cot-1">
+  <div class="meta-row">
     <div class="client-bl">
       <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
       <span class="cl">Lugar de instalación:</span><br>
@@ -591,10 +590,6 @@ body{
       Fecha de emisión: <span class="today-date"></span>
     </div>
   </div>
-
-  <!----------FIRST ONES------------>
-<div class="pagina cot-1" id="pag5">
-
   <!-- Title box -->
   <div class="page-title-box">
     Diagrama de Flujo<br>Compack 003 CD Inoxidable
@@ -787,6 +782,247 @@ body{
 
 </div>
 
+<!--------------SEGUNDA COTIZACION------------->
+<!-- ════════════════════════════════════════
+     PÁGINA – DIAGRAMA DE FLUJO AQUAPACK CONTAINER
+     ════════════════════════════════════════ -->
+<div class="pagina cot-2" id="pag7">
+<div class="pg-header">
+    <div class="pg-header-inner">
+      <div class="logo-area">
+      </div>
+      <div class="empresa-info">
+        ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
+        RFC: ATA-131127-8U9<br>
+        Tabachín 202,<br>
+        Bellavista, Cuernavaca,<br>
+        Morelos C.P. 62140<br>
+        Tels: 777 364 5092 – 800 225 2728
+      </div>
+    </div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-row">
+    <div class="client-bl">
+      <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
+      <span class="cl">Lugar de instalación:</span><br>
+      <span class="parameter-address"></span><br>
+      <span class="parameter-state"></span>
+    </div>
+    <div class="quote-bl">
+      <span class="qn">Cotización: <span class="parameter-id">C-1740608454</span></span><br>
+      Fecha de emisión: <span class="today-date"></span>
+    </div>
+  </div>
+
+  <div class="page-title-box">
+    Diagrama de Flujo<br>Aquapack Container
+  </div>
+
+  <div style="padding:0 28px 130px;">
+
+    <!-- TOP: diagrama de flujo image (full width) -->
+    <div class="img-ph" style="width:100%;margin-top:16px">
+      <img src="https://i.imgur.com/Jdq311z.png" style="width: 100%;"/>
+    </div>
+
+    <!-- BOTTOM: A-E left, isométrico right -->
+    <div style="display:grid;grid-template-columns:30% 1fr;gap:20px;align-items:start;">
+
+      <!-- LEFT: descripciones A B C D E -->
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top: -240px;">
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">A</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Cribado</span>
+          </div>
+          <p class="desc-body">El agua residual entra al sistema de tratamiento e inmediatamente pasa por una rejilla que retiene sólidos gruesos que podrían taponar válvulas, tuberías, así como generar un desgaste excesivo en bombas. Por esta razón los sistemas del pretratamiento son colocados antes del cárcamo de bombeo. Las operaciones realizadas con este propósito son rejillas para retener sólidos gruesos, desarenador para retener arena, ceniza o grava y trampa de grasas para remoción de grasa y aceite (en caso de requerirse). Posteriormente el agua pasa al carcamo donde será bombeada a la planta de tratamiento.</p>
+        </div>
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">B</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Reactor Aerobio</span>
+          </div>
+          <p class="desc-body">Su función principal es la degradación biológica de los contaminantes órganicos mediante un consorcio de microorganismos. El mecanismo que tiene lugar es el siguiente: las bacterias consumen la materia orgánica presente en el agua al incorporarla a su metabolismo como fuente de carbono, que le permite obtener energía para desarrollar sus funciones.</p>
+        </div>
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">C</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Sedimentador</span>
+          </div>
+          <p class="desc-body">Aquí se realiza el proceso de separación del agua tratada y el lodo. El agua tratada fluye hacia el canal vertedor que lo guía hacia el tubo de desinfección.</p>
+        </div>
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">D</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Desinfección</span>
+          </div>
+          <p class="desc-body">Aquí se aplica cloro para desinfectar el agua con el objetivo de eliminar las bacterias causantes de enfermedades.</p>
+        </div>
+
+        <div class="desc-item">
+          <div class="desc-item-header">
+            <span class="desc-letter">E</span>
+            <div class="desc-bar"></div>
+            <span class="desc-label">Sistema Reductor de Lodos</span>
+          </div>
+          <p class="desc-body">Como todo sistema de tratamiento biológico, también la PTAR Aquapack produce lodo residual en menor proporción que en un sistema normal; el cual debe ser purgado del sistema para su posterior tratamiento y disposición. Los sólidos purgados son reducidos en un filtro bolsa, donde una mezcla de lodo y polimero se ingresa a una bolsa que retiene el lodo y deja pasar el agua.</p>
+        </div>
+
+      </div><!-- /left descriptions -->
+
+      <!-- RIGHT: isométrico image -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div class="img-ph" style="width:100%;">
+          <img src="https://i.imgur.com/xNx2Jth.png" style="width: 100%;"/>
+        </div>
+      </div>
+
+    </div><!-- /bottom grid -->
+  </div><!-- /padding wrap -->
+
+  <div class="pg-footer">
+    <div class="pg-footer-inner">
+      <div class="footer-dept">
+        <h4>Departamento Comercial</h4>
+        <p>Ing. Manuel Guerrero Orozco<br>E-mail: manuel.guerrero@aclara.mx<br>Tel: 4432094250</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pag-diag-aquapack -->
+
+
+<!-- ════════════════════════════════════════
+     PÁGINA – PLANO DE CONJUNTO AQUAPACK CONTAINER
+     ════════════════════════════════════════ -->
+<div class="pagina cot-2" id="pag8">
+<div class="pg-header">
+    <div class="pg-header-inner">
+      <div class="logo-area">
+      </div>
+      <div class="empresa-info">
+        ACLARA TRATAMIENTO DE AGUA S.A. DE C.V.<br>
+        RFC: ATA-131127-8U9<br>
+        Tabachín 202,<br>
+        Bellavista, Cuernavaca,<br>
+        Morelos C.P. 62140<br>
+        Tels: 777 364 5092 – 800 225 2728
+      </div>
+    </div>
+  </div>
+
+  <!-- META -->
+  <div class="meta-row">
+    <div class="client-bl">
+      <span class="cl">Cliente:</span> <span class="parameter-name"></span><br>
+      <span class="cl">Lugar de instalación:</span><br>
+      <span class="parameter-address"></span><br>
+      <span class="parameter-state"></span>
+    </div>
+    <div class="quote-bl">
+      <span class="qn">Cotización: <span class="parameter-id">C-1740608454</span></span><br>
+      Fecha de emisión: <span class="today-date"></span>
+    </div>
+  </div>
+
+  <div class="page-title-box">
+    Plano de Conjunto<br>Aquapack Container
+  </div>
+
+  <!-- Two-column layout: planos left, simbología right -->
+  <div style="padding:16px 28px 130px;display:grid;grid-template-columns:1fr 220px;gap:12px;justify-content: center;align-items: center;">
+
+    <!-- LEFT: Planta + Perfil images -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+
+      <!-- Planta de Conjunto -->
+      <div class="img-ph" style="width:100%;padding-bottom: 126px;">
+        <img src="https://i.imgur.com/T2weKt1.png" style="width: 100%;">
+      </div>
+
+      <!-- Perfil Esquemático -->
+      <div class="img-ph" style="width:100%;">
+        <img src="https://i.imgur.com/z7PMnXu.png" style="width: 100%;">
+      </div>
+
+    </div><!-- /planos col -->
+
+    <!-- RIGHT: simbología + notas -->
+    <div>
+
+      <div style="font-family:'Open Sans',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#111;border-bottom:1.5px solid #111;padding-bottom:5px;margin-bottom:12px;">
+        Simbologia de Alcances
+      </div>
+
+      <!-- PCC cliente -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:9.5px;color:#111;font-weight:700;text-transform:uppercase;line-height:1.4;">
+        <div style="width:30px;height:30px;border-radius:50%;border:2px solid red;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#111;flex-shrink:0;font-family:'Open Sans',sans-serif;letter-spacing:-.2px;">PCC</div>
+        <span>Trabajos por<br>cuenta del cliente</span>
+      </div>
+
+      <!-- PCC Aclara -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:9.5px;color:#111;font-weight:700;text-transform:uppercase;line-height:1.4;">
+        <img src="https://i.imgur.com/mSIgdnn.png" style="width:30px;height:30px;flex-shrink:0;"/>
+        <span>Trabajos por<br>cuenta de Aclara</span>
+      </div>
+
+      <!-- Notas numeradas -->
+      <ol style="list-style:none;padding:0;font-size:8.8px;color:#111;line-height:1.7;text-transform:uppercase;font-weight:400;">
+        <li style="display:grid;grid-template-columns:14px 1fr;gap:3px;margin-bottom:5px;">
+          <span style="font-weight:700;">1.</span>
+          <span>El cliente será responsable de suministrar la energía eléctrica conforme a lo indicado en el diagrama unifilar, en el área de equipos de la PTAR y en el área del sistema de bombeo. El interruptor del cliente no deberá ubicarse a más de 1.00 m de distancia del área indicada en planos.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:14px 1fr;gap:3px;margin-bottom:5px;">
+          <span style="font-weight:700;">2.</span>
+          <span>Será responsabilidad del cliente realizar la conexión de la línea de demasías de agua cruda del cárcamo al punto de desfogue correspondiente.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:14px 1fr;gap:3px;margin-bottom:5px;">
+          <span style="font-weight:700;">3.</span>
+          <span>Los diámetros y especificaciones de las tuberías no podrán modificarse a criterio del constructor, ya que cualquier cambio puede afectar el correcto funcionamiento del sistema. En caso de requerirse un ajuste, deberá solicitarse previamente al departamento de proyectos.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:14px 1fr;gap:3px;margin-bottom:5px;">
+          <span style="font-weight:700;">4.</span>
+          <span>La construcción de la losa de cimentación, pozo doble y caseta de equipos no forma parte de los alcances del contrato. Será responsabilidad del cliente la preparación del terreno, la construcción de las unidades y la obtención de los permisos necesarios para su ejecución.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:14px 1fr;gap:3px;margin-bottom:5px;">
+          <span style="font-weight:700;">5.</span>
+          <span>Las vialidades, banquetas, áreas verdes, iluminación exterior y cercado perimetral no están incluidos dentro de los alcances del contrato.</span>
+        </li>
+      </ol>
+
+      <!-- Notas extra en rojo -->
+      <div style="margin-top:12px;font-size:8.5px;color:red;line-height:1.7;text-transform:uppercase;">
+        <p style="margin-bottom:6px;"><b>Nota:</b>&nbsp; El presente plano es de carácter informativo y no es apto para construcción, ya que únicamente describe las características generales de las unidades.</p>
+        <p style="margin-bottom:6px;">Las unidades podrán presentar modificaciones en su versión final.</p>
+        <p>La presente propuesta se elabora con base en los alcances establecidos en la propuesta económica.</p>
+      </div>
+
+    </div><!-- /simb col -->
+
+  </div><!-- /grid -->
+
+  <div class="pg-footer">
+    <div class="pg-footer-inner">
+      <div class="footer-dept">
+        <h4>Departamento Comercial</h4>
+        <p>Ing. Manuel Guerrero Orozco<br>E-mail: manuel.guerrero@aclara.mx<br>Tel: 4432094250</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /pag-plano-aquapack -->
+
+
 <!-- ════════════════════════════════════════
      PÁGINA 4 – Términos y condiciones
      ════════════════════════════════════════ -->
@@ -864,19 +1100,18 @@ body{
 
 
 <script>
+let paginasActuales = [];
+
 async function exportarPDF() {
   const { jsPDF } = window.jspdf;
-  var paginas = ['pag5','pag6','pag4']
-  .map(id => document.getElementById(id))
-  .filter(el => el !== null);
   const loading = document.getElementById('loading');
   loading.style.display = 'inline';
 
   try {
     const pdf = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
 
-    for (let i = 0; i < paginas.length; i++) {
-      const canvas = await html2canvas(paginas[i], {
+    for (let i = 0; i < paginasActuales.length; i++) {
+      const canvas = await html2canvas(paginasActuales[i], {
         scale: 2,
         useCORS: true,
         allowTaint: false,
@@ -890,7 +1125,7 @@ async function exportarPDF() {
       pdf.addImage(imgData, 'PNG', 0, 0, 210, 297, '', 'FAST');
     }
 
-    pdf.save('cotizacion-aclara-C-1740608454.pdf');
+    pdf.save('cotizacion-aclara.pdf');
   } catch(e) {
     alert('Error al generar PDF: ' + e.message);
     console.error(e);
@@ -921,13 +1156,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.parameter-state').forEach(el => {
     el.textContent = params.get("ciudad");
   });
-  if(params.get("cotizacion")==1){
-    document.querySelectorAll('.cot-1').forEach(el => {
-      el.style.display = 'block';
-    });
-    paginas = ['pag5','pag6','pag4']
-    .map(id => document.getElementById(id))
-    .filter(el => el !== null);
+
+  const cotizacion = params.get("cotizacion");
+  if (cotizacion == 1) {
+    document.querySelectorAll('.cot-1').forEach(el => el.style.display = 'block');
+    paginasActuales = ['pag5','pag6','pag4']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+  } else if (cotizacion == 2) {
+    document.querySelectorAll('.cot-2').forEach(el => el.style.display = 'block');
+    paginasActuales = ['pag7','pag8','pag4']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
   }
   
 });
